@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Workshop{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet">
+    {% load static %}
+    <link href="{% static 'workshop/css/workshop.css' %}" rel="stylesheet">
+    {% block extra_css %}{% endblock %}
+    <style>
+        :root {
+            --topbar-bg: #714b67;      /* Odoo/Bizdom purple */
+            --sidebar-bg: #f8f9fa;
+            --sidebar-border: #dee2e6;
+            --active-bg: #e9ecef;
+        }
+        body { margin: 0; background: #fff; }
+
+        /* TOP BAR */
+        .topbar {
+            background: var(--topbar-bg);
+            color: #fff;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            justify-content: space-between;
+        }
+        .topbar .brand { font-weight: 600; font-size: 1.1rem; }
+        .topbar a { color: #fff; text-decoration: none; margin-left: 20px; opacity: 0.9; }
+        .topbar a:hover { opacity: 1; }
+
+        /* LAYOUT */
+        .app-body { display: flex; min-height: calc(100vh - 46px); }
+
+        /* LEFT APP MENU */
+        .app-menu {
+            width: 220px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--sidebar-border);
+            padding: 12px 0;
+        }
+        .app-menu .menu-section {
+            padding: 8px 16px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #6c757d;
+            font-weight: 600;
+        }
+        .app-menu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            color: #333;
+            text-decoration: none;
+        }
+        .app-menu a:hover { background: var(--active-bg); }
+        .app-menu a.active {
+            background: var(--active-bg);
+            font-weight: 600;
+            border-left: 3px solid var(--topbar-bg);
+        }
+        .app-menu .sub-link {
+            padding-left: 42px;
+            font-size: 0.95rem;
+        }
+
+        /* MAIN */
+        .main-content {
+            flex: 1;
+            padding: 20px 24px;
+            background: #fff;
+        }
+        .select2-container { width: 100% !important; }
+    </style>
+</head>
+<body>
+
+<!-- TOP BAR (Bizdom-style — dashboard links later) -->
+<header class="topbar">
+    <div class="d-flex align-items-center">
+        <span class="brand">Bizdom</span>
+        {# Later: Pillars, Dashboard, etc. #}
+    </div>
+    <div class="d-flex align-items-center">
+        <span>
+            <i class="bi bi-person-circle"></i>
+            {% if user.is_authenticated %}{{ user.get_username }}{% else %}Staff{% endif %}
+        </span>
+    </div>
+</header>
+
+<div class="app-body">
+
+
+
+
+    <nav class="app-menu">
+        <div class="menu-section">Apps</div>
+
+        <a href="{% url 'jobcard_list' %}">
+            <i class="bi bi-wrench"></i> Car Repair
+        </a>
+        <a href="{% url 'jobcard_list' %}" class="sub-link">
+            Job Cards
+        </a>
+
+        <a href="{% url 'customer_list' %}">
+            <i class="bi bi-person-lines-fill"></i> Contacts
+        </a>
+        <a href="{% url 'customer_list' %}" class="sub-link">
+            Customers
+        </a>
+    </nav>
+
+    <!-- PAGE CONTENT -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

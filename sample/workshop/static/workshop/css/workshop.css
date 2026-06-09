@@ -1,0 +1,416 @@
+/* Workshop ERP — Odoo-inspired, Bizdom-branded */
+
+:root {
+    --odoo-purple: #714b67;
+    --odoo-purple-dark: #5a3d52;
+    --odoo-sheet-bg: #ffffff;
+    --odoo-page-bg: #f0f0f0;
+    --odoo-border: #dee2e6;
+    --odoo-text-muted: #6c757d;
+    --odoo-link: #714b67;
+}
+
+.main-content {
+    background: var(--odoo-page-bg) !important;
+}
+
+/* ── Control panel (list view header) ── */
+.odoo-control-panel {
+    background: var(--odoo-sheet-bg);
+    border: 1px solid var(--odoo-border);
+    border-radius: 4px 4px 0 0;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.odoo-breadcrumb {
+    font-size: 0.85rem;
+    color: var(--odoo-text-muted);
+    margin-bottom: 2px;
+}
+
+.odoo-breadcrumb a {
+    color: var(--odoo-link);
+    text-decoration: none;
+}
+
+.odoo-breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.odoo-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #212529;
+    margin: 0;
+}
+
+.odoo-btn-primary {
+    background: var(--odoo-purple);
+    border: 1px solid var(--odoo-purple-dark);
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.odoo-btn-primary:hover {
+    background: var(--odoo-purple-dark);
+    color: #fff;
+}
+
+.odoo-btn-secondary {
+    background: #fff;
+    border: 1px solid var(--odoo-border);
+    color: #495057;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.odoo-btn-secondary:hover {
+    background: #f8f9fa;
+    color: #212529;
+}
+
+/* ── State filter pills ── */
+.odoo-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 10px 16px;
+    background: #fafafa;
+    border-left: 1px solid var(--odoo-border);
+    border-right: 1px solid var(--odoo-border);
+}
+
+.odoo-filter-pill {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    text-decoration: none;
+    color: #495057;
+    background: #fff;
+    border: 1px solid var(--odoo-border);
+}
+
+.odoo-filter-pill:hover {
+    background: #eee;
+    color: #212529;
+}
+
+.odoo-filter-pill.active {
+    background: var(--odoo-purple);
+    border-color: var(--odoo-purple);
+    color: #fff;
+}
+
+/* ── List table ── */
+.odoo-list-wrapper {
+    background: var(--odoo-sheet-bg);
+    border: 1px solid var(--odoo-border);
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    overflow: hidden;
+}
+
+.odoo-list-table {
+    width: 100%;
+    margin: 0;
+    font-size: 0.875rem;
+}
+
+.odoo-list-table thead th {
+    background: #fafafa;
+    border-bottom: 2px solid var(--odoo-border);
+    padding: 10px 12px;
+    font-weight: 600;
+    color: #495057;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+}
+
+.odoo-list-table tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+.odoo-list-table tbody tr:hover {
+    background: #f8f4f7;
+}
+
+.odoo-list-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.odoo-list-link {
+    color: var(--odoo-link);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.odoo-list-link:hover {
+    text-decoration: underline;
+}
+
+/* ── Status badges ── */
+.odoo-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.odoo-badge-draft { background: #e9ecef; color: #495057; }
+.odoo-badge-diagnosis { background: #cff4fc; color: #055160; }
+.odoo-badge-quote { background: #fff3cd; color: #664d03; }
+.odoo-badge-workorder { background: #cfe2ff; color: #084298; }
+.odoo-badge-done { background: #d1e7dd; color: #0f5132; }
+.odoo-badge-cancel { background: #f8d7da; color: #842029; }
+
+/* ── Form sheet ── */
+.odoo-form-sheet {
+    background: var(--odoo-sheet-bg);
+    border: 1px solid var(--odoo-border);
+    border-radius: 4px;
+    margin-bottom: 16px;
+}
+
+.odoo-form-header {
+    border-bottom: 1px solid var(--odoo-border);
+    padding: 0;
+}
+
+.odoo-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: #fafafa;
+    border-bottom: 1px solid var(--odoo-border);
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Statusbar — Odoo-inspired workflow strip */
+.odoo-statusbar {
+    display: flex;
+    align-items: stretch;
+    overflow-x: auto;
+    padding: 0 16px 0 0;
+    margin-left: auto;
+}
+
+.odoo-statusbar-step {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    color: var(--odoo-text-muted);
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    position: relative;
+}
+
+.odoo-statusbar-step.active {
+    color: var(--odoo-purple);
+    font-weight: 600;
+    border-bottom-color: var(--odoo-purple);
+    background: #fdf8fb;
+}
+
+.odoo-statusbar-step.done {
+    color: #0f5132;
+}
+
+.odoo-form-title-block {
+    padding: 16px 20px 8px;
+}
+
+.odoo-form-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #212529;
+    margin: 0;
+}
+
+.odoo-form-subtitle {
+    font-size: 0.85rem;
+    color: var(--odoo-text-muted);
+    margin-top: 4px;
+}
+
+/* Smart buttons row */
+.odoo-smart-buttons {
+    display: flex;
+    gap: 0;
+    padding: 0 16px 12px;
+    flex-wrap: wrap;
+}
+
+.odoo-smart-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 16px;
+    border: 1px solid var(--odoo-border);
+    border-radius: 4px;
+    margin-right: -1px;
+    background: #fff;
+    min-width: 90px;
+    text-decoration: none;
+    color: var(--odoo-text-muted);
+    font-size: 0.75rem;
+}
+
+.odoo-smart-btn strong {
+    font-size: 1.1rem;
+    color: var(--odoo-purple);
+}
+
+.odoo-smart-btn:hover {
+    background: #f8f4f7;
+}
+
+/* Notebook tabs */
+.odoo-notebook {
+    border-top: 1px solid var(--odoo-border);
+}
+
+.odoo-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--odoo-border);
+    background: #fafafa;
+    padding: 0 12px;
+}
+
+.odoo-tab {
+    padding: 10px 16px;
+    font-size: 0.875rem;
+    color: var(--odoo-text-muted);
+    border: none;
+    background: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    cursor: pointer;
+}
+
+.odoo-tab:hover {
+    color: #212529;
+}
+
+.odoo-tab.active {
+    color: var(--odoo-purple);
+    font-weight: 600;
+    border-bottom-color: var(--odoo-purple);
+    background: #fff;
+}
+
+.odoo-tab-pane {
+    display: none;
+    padding: 20px;
+}
+
+.odoo-tab-pane.active {
+    display: block;
+}
+
+.odoo-section-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--odoo-purple);
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #f0e6ee;
+}
+
+.odoo-field-label {
+    font-size: 0.8rem;
+    color: var(--odoo-text-muted);
+    margin-bottom: 4px;
+}
+
+/* Inline editable list (service lines) */
+.odoo-inline-table thead th {
+    background: #fafafa;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #6c757d;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--odoo-border);
+}
+
+.odoo-inline-table tbody td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+.odoo-inline-table input.form-control {
+    font-size: 0.875rem;
+}
+
+/* Sticky footer */
+.odoo-form-footer {
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+    border: 1px solid var(--odoo-border);
+    border-radius: 4px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
+    z-index: 10;
+}
+
+.odoo-form-footer .odoo-btn-save {
+    background: var(--odoo-purple);
+    border: none;
+    color: #fff;
+    padding: 8px 24px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.odoo-form-footer .odoo-btn-save:hover {
+    background: var(--odoo-purple-dark);
+}
+
+/* State select hidden in header but available */
+.odoo-state-select {
+    max-width: 180px;
+    font-size: 0.85rem;
+}
+
+/* Flatpickr — match Bizdom purple */
+.flatpickr-calendar.open {
+    z-index: 1050;
+}
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+    background: var(--odoo-purple);
+    border-color: var(--odoo-purple);
+}
+.flatpickr-day.selected:hover,
+.flatpickr-day.startRange:hover,
+.flatpickr-day.endRange:hover {
+    background: var(--odoo-purple-dark);
+    border-color: var(--odoo-purple-dark);
+}

@@ -1,0 +1,13 @@
+{% if jc.state == 'done' %}
+    <span class="odoo-badge odoo-badge-done">{{ jc.get_state_display }}</span>
+{% elif jc.state == 'workorder' %}
+    <span class="odoo-badge odoo-badge-workorder">{{ jc.get_state_display }}</span>
+{% elif jc.state == 'quote' %}
+    <span class="odoo-badge odoo-badge-quote">{{ jc.get_state_display }}</span>
+{% elif jc.state == 'diagnosis' %}
+    <span class="odoo-badge odoo-badge-diagnosis">{{ jc.get_state_display }}</span>
+{% elif jc.state == 'cancel' %}
+    <span class="odoo-badge odoo-badge-cancel">{{ jc.get_state_display }}</span>
+{% else %}
+    <span class="odoo-badge odoo-badge-draft">{{ jc.get_state_display }}</span>
+{% endif %}
