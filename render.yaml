@@ -9,8 +9,8 @@ services:
     name: biz-erp-sample
     runtime: python
     plan: free
-    buildCommand: ./build.sh
-    startCommand: cd sample && gunicorn sample.wsgi:application --bind 0.0.0.0:$PORT
+    buildCommand: bash build.sh
+    startCommand: cd sample && python manage.py migrate --no-input && gunicorn sample.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.8
