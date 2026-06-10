@@ -2,7 +2,7 @@ from django import forms
 from django.forms import inlineformset_factory
 from django.utils import timezone
 
-from .models import JobCard, ServiceDetailLine, Customer
+from .models import JobCard, ServiceDetailLine
 
 DATETIME_PICKER_FORMAT = '%Y-%m-%d %H:%M'
 DATETIME_PICKER_INPUT_FORMATS = [
@@ -66,17 +66,6 @@ class JobCardForm(forms.ModelForm):
             now = timezone.localtime()
             self.initial.setdefault('receipt_date', now)
             self.initial.setdefault('promised_date', now)
-
-
-class CustomerForm(forms.ModelForm):
-    class Meta:
-        model = Customer
-        fields = ['name', 'phone', 'email']
-        widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control'}),
-        }
 
 
 ServiceLineFormSet = inlineformset_factory(
