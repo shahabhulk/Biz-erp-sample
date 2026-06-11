@@ -1,5 +1,7 @@
 import json
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import redirect, get_object_or_404
@@ -24,13 +26,14 @@ def _safe_next_url(request, next_url):
     return None
 
 
-class CustomerListView(ListView):
+class CustomerListView(LoginRequiredMixin, ListView):
     model = Customer
     template_name = 'contacts/customer_list.html'
     context_object_name = 'customers'
     paginate_by = 20
 
 
+@login_required
 @require_GET
 def customer_search(request):
     q = request.GET.get('q', '').strip()
@@ -47,6 +50,7 @@ def customer_search(request):
     })
 
 
+@login_required
 @require_POST
 def customer_quick_create(request):
     try:
@@ -66,6 +70,7 @@ def customer_quick_create(request):
     return JsonResponse({'id': customer.pk, 'text': customer.name})
 
 
+@login_required
 def customer_create(request):
     next_url = _safe_next_url(request, request.GET.get('next'))
 
@@ -92,6 +97,7 @@ def customer_create(request):
     })
 
 
+@login_required
 def customer_edit(request, pk):
     customer = get_object_or_404(Customer, pk=pk)
 

@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import redirect, get_object_or_404
 from django.template.response import TemplateResponse
@@ -31,7 +33,7 @@ def _jobcard_form_context(request, form, formset, title, job_card):
     }
 
 
-class JobCardListView(ListView):
+class JobCardListView(LoginRequiredMixin, ListView):
     model = JobCard
     template_name = 'workshop/jobcard_list.html'
     context_object_name = 'job_cards'
@@ -60,6 +62,7 @@ class JobCardListView(ListView):
         return context
 
 
+@login_required
 def jobcard_create(request):
     if request.method == 'POST':
         form = JobCardForm(request.POST)
@@ -78,6 +81,7 @@ def jobcard_create(request):
     ))
 
 
+@login_required
 def jobcard_edit(request, pk):
     job_card = get_object_or_404(JobCard, pk=pk)
     if request.method == 'POST':
