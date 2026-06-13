@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', RedirectView.as_view(url='/workshop/job-cards/', permanent=False)),
     path('contacts/', include('contacts.urls')),
+    path('fleet/', include('fleet.urls')),
     path('workshop/', include('workshop.urls')),
     path('accounts/login/', LoginView.as_view(), name='login'),
     path('accounts/logout/', LogoutView.as_view(), name='logout'),

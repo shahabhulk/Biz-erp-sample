@@ -1,0 +1,39 @@
+{% extends "workshop/base.html" %}
+
+{% block title %}{{ title }} — Fleet{% endblock %}
+
+{% block content %}
+<div class="odoo-control-panel mb-3">
+    <div>
+        <div class="odoo-breadcrumb">
+            <a href="{% url 'brand_list' %}">Fleet</a>
+            <span> / {% if brand %}Edit{% else %}New{% endif %}</span>
+        </div>
+        <h1 class="odoo-title">{{ title }}</h1>
+    </div>
+    <a href="{% url 'brand_list' %}" class="odoo-btn-secondary">
+        <i class="bi bi-arrow-left"></i> Car Brands
+    </a>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="odoo-form-sheet">
+        <div class="odoo-section-title">Brand details</div>
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                <div class="odoo-field-label">Brand name *</div>
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="text-danger small mt-1">{{ form.name.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="odoo-form-footer">
+        <button type="submit" class="odoo-btn-save">
+            <i class="bi bi-check-lg"></i> Save
+        </button>
+    </div>
+</form>
+{% endblock %}

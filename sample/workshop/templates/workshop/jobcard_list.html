@@ -42,8 +42,8 @@
             <tr>
                 <th>Number</th>
                 <th>Customer</th>
-                <th>Plate</th>
-                <th>VIN</th>
+                <th>Vehicle</th>
+                <th>KMS</th>
                 <th>JC Date</th>
                 <th>Promised</th>
                 <th>Assigned</th>
@@ -62,8 +62,15 @@
                     <small class="text-muted">{{ jc.customer.phone }}</small>
                     {% endif %}
                 </td>
-                <td>{{ jc.license_plate|default:"—" }}</td>
-                <td><span class="text-muted">{{ jc.vin|default:"—" }}</span></td>
+                <td>
+                    {% if jc.vehicle %}
+                    <div>{{ jc.vehicle.brand.name }} {{ jc.vehicle.model.name }}</div>
+                    <small class="text-muted">{{ jc.vehicle.license_plate|default:"—" }}</small>
+                    {% else %}
+                    —
+                    {% endif %}
+                </td>
+                <td>{{ jc.odometer_km|default:"—" }}</td>
                 <td>{{ jc.receipt_date|date:"M j, Y" }}<br><small class="text-muted">{{ jc.receipt_date|time:"g:i A" }}</small></td>
                 <td>{{ jc.promised_date|date:"M j, Y" }}<br><small class="text-muted">{{ jc.promised_date|time:"g:i A" }}</small></td>
                 <td>{{ jc.assigned_to|default:"—" }}</td>

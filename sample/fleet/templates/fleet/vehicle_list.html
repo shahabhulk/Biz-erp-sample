@@ -1,0 +1,81 @@
+{% extends "workshop/base.html" %}
+
+{% block title %}Vehicles — Fleet{% endblock %}
+
+{% block content %}
+<div class="odoo-control-panel">
+    <div>
+        <div class="odoo-breadcrumb">
+            <a href="{% url 'vehicle_list' %}">Fleet</a>
+            <span> / Vehicles</span>
+        </div>
+        <h1 class="odoo-title">Vehicles</h1>
+    </div>
+    <div class="d-flex align-items-center gap-2 flex-wrap">
+        <form method="get" class="d-flex gap-2">
+            <input type="search" name="q" value="{{ search_query }}"
+                   class="form-control form-control-sm" placeholder="Search plate, customer, brand..."
+                   style="min-width: 220px;">
+            <button type="submit" class="odoo-btn-secondary btn-sm">Search</button>
+        </form>
+        <a href="{% url 'vehicle_create' %}" class="odoo-btn-primary">
+            <i class="bi bi-plus-lg"></i> New
+        </a>
+    </div>
+</div>
+
+<div class="odoo-list-wrapper">
+    <table class="odoo-list-table">
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Car</th>
+                <th>Model</th>
+                <th>License Plate</th>
+                <th>Chassis</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for v in vehicles %}
+            <tr>
+                <td>
+                    <a href="{% url 'vehicle_edit' v.pk %}" class="odoo-list-link">{{ v.customer.name }}</a>
+                </td>
+                <td>{{ v.brand.name }}</td>
+                <td>{{ v.model.name }}</td>
+                <td>{{ v.license_plate|default:"—" }}</td>
+                <td><span class="text-muted">{{ v.chassis_number|default:"—" }}</span></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center text-muted py-5">
+                    <i class="bi bi-car-front display-6 d-block mb-2 opacity-25"></i>
+                    No vehicles found.
+                    <a href="{% url 'vehicle_create' %}">Register a vehicle</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if is_paginated %}
+<nav class="mt-3 d-flex justify-content-center">
+    <ul class="pagination pagination-sm mb-0">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query|urlencode }}{% endif %}">Previous</a>
+        </li>
+        {% endif %}
+        <li class="page-item disabled">
+            <span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+        </li>
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query|urlencode }}{% endif %}">Next</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}

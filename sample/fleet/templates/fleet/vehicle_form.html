@@ -1,0 +1,138 @@
+{% extends "workshop/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} — Fleet{% endblock %}
+
+{% block content %}
+<div class="odoo-control-panel mb-3">
+    <div>
+        <div class="odoo-breadcrumb">
+            <a href="{% url 'vehicle_list' %}">Fleet</a>
+            <span> / {% if vehicle %}Edit{% else %}New{% endif %}</span>
+        </div>
+        <h1 class="odoo-title">{{ title }}</h1>
+        {% if next_url %}
+        <p class="text-muted small mb-0">After save you will return to the job card.</p>
+        {% endif %}
+    </div>
+    <div>
+        {% if next_url %}
+        <a href="{{ next_url }}" class="odoo-btn-secondary">
+            <i class="bi bi-arrow-left"></i> Back to job card
+        </a>
+        {% else %}
+        <a href="{% url 'vehicle_list' %}" class="odoo-btn-secondary">
+            <i class="bi bi-arrow-left"></i> Vehicles
+        </a>
+        {% endif %}
+    </div>
+</div>
+
+<form method="post" id="vehicle-form">
+    {% csrf_token %}
+    {% if next_url %}
+    <input type="hidden" name="next" value="{{ next_url }}">
+    {% endif %}
+
+    <div class="odoo-form-sheet">
+        <div class="odoo-section-title">Vehicle details</div>
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                <div class="odoo-field-label">Customer *</div>
+                <select name="{{ form.customer.html_name }}"
+                        id="{{ form.customer.id_for_label }}"
+                        class="form-select customer-autocomplete"
+                        data-placeholder="Search or create customer..."
+                        data-search-url="{{ customer_search_url }}"
+                        data-quick-create-url="{{ customer_quick_create_url }}"
+                        required>
+                    <option value=""></option>
+                    {% for value, label in form.customer.field.choices %}
+                        {% if value %}
+                        <option value="{{ value }}" {% if form.customer.value|stringformat:"s" == value|stringformat:"s" %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                {% if form.customer.errors %}
+                    <div class="text-danger small mt-1">{{ form.customer.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-3">
+                <div class="odoo-field-label">Car (brand) *</div>
+                <select name="{{ form.brand.html_name }}"
+                        id="id_vehicle_brand"
+                        class="form-select brand-autocomplete"
+                        data-placeholder="Search or create brand..."
+                        data-search-url="{{ brand_search_url }}"
+                        data-quick-create-url="{{ brand_quick_create_url }}"
+                        required>
+                    <option value=""></option>
+                    {% for value, label in form.brand.field.choices %}
+                        {% if value %}
+                        <option value="{{ value }}" {% if form.brand.value|stringformat:"s" == value|stringformat:"s" %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                {% if form.brand.errors %}
+                    <div class="text-danger small mt-1">{{ form.brand.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-3">
+                <div class="odoo-field-label">Model *</div>
+                <select name="{{ form.model.html_name }}"
+                        id="id_vehicle_model"
+                        class="form-select model-autocomplete"
+                        data-placeholder="Search or create model..."
+                        data-search-url="{{ model_search_url }}"
+                        data-quick-create-url="{{ model_quick_create_url }}"
+                        data-brand-field="#id_vehicle_brand"
+                        required>
+                    <option value=""></option>
+                    {% for value, label in form.model.field.choices %}
+                        {% if value %}
+                        <option value="{{ value }}" {% if form.model.value|stringformat:"s" == value|stringformat:"s" %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                {% if form.model.errors %}
+                    <div class="text-danger small mt-1">{{ form.model.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-3">
+                <div class="odoo-field-label">License Plate</div>
+                {{ form.license_plate }}
+                {% if form.license_plate.errors %}
+                    <div class="text-danger small mt-1">{{ form.license_plate.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-3">
+                <div class="odoo-field-label">Chassis Number</div>
+                {{ form.chassis_number }}
+                {% if form.chassis_number.errors %}
+                    <div class="text-danger small mt-1">{{ form.chassis_number.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="odoo-form-footer">
+        <span class="text-muted small">
+            {% if vehicle %}Editing vehicle #{{ vehicle.pk }}{% else %}Registering new vehicle{% endif %}
+        </span>
+        <button type="submit" class="odoo-btn-save">
+            <i class="bi bi-check-lg"></i> Save
+        </button>
+    </div>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'contacts/js/customer_autocomplete.js' %}"></script>
+<script src="{% static 'fleet/js/brand_model_autocomplete.js' %}"></script>
+{% endblock %}

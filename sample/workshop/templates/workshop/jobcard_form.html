@@ -8,7 +8,10 @@
 {% endblock %}
 
 {% block content %}
-<form method="post" id="jobcard-form">
+<form method="post" id="jobcard-form"
+      data-models-url="{{ vehicle_models_url }}"
+      data-vehicle-detail-url="{{ vehicle_detail_url }}"
+      data-vehicle-search-url="{{ vehicle_search_url }}">
     {% csrf_token %}
 
     <div class="odoo-form-sheet">
@@ -100,15 +103,100 @@
                 </div>
 
                 <div class="odoo-section-title">Vehicle Information</div>
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <div class="odoo-field-label">Existing vehicle (optional)</div>
+                        <select name="{{ form.vehicle.html_name }}"
+                                id="{{ form.vehicle.id_for_label }}"
+                                class="form-select vehicle-autocomplete"
+                                data-placeholder="Search by plate or model...">
+                            <option value=""></option>
+                            {% for value, label in form.vehicle.field.choices %}
+                                {% if value %}
+                                <option value="{{ value }}" {% if form.vehicle.value|stringformat:"s" == value|stringformat:"s" %}selected{% endif %}>
+                                    {{ label }}
+                                </option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        {% if form.vehicle.errors %}
+                            <div class="text-danger small mt-1">{{ form.vehicle.errors }}</div>
+                        {% endif %}
+                        <span class="small text-muted d-block">Pick a saved car, or enter details below for a new one.</span>
+                        <a href="{% url 'vehicle_create' %}?next={{ request.path|urlencode }}"
+                           class="small text-decoration-none d-inline-block mt-1"
+                           id="full-vehicle-form-link">
+                            + Full vehicle form
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="odoo-field-label">KMS</div>
+                        {{ form.odometer_km }}
+                        {% if form.odometer_km.errors %}
+                            <div class="text-danger small mt-1">{{ form.odometer_km.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
                 <div class="row g-3 mb-4">
                     <div class="col-md-6 col-lg-3">
-                        <div class="odoo-field-label">License plate</div>
-                        {{ form.license_plate }}
+                        <div class="odoo-field-label">Car *</div>
+                        <select name="{{ form.vehicle_brand.html_name }}"
+                                id="id_vehicle_brand"
+                                class="form-select brand-autocomplete"
+                                data-placeholder="Search or create brand..."
+                                data-search-url="{{ brand_search_url }}"
+                                data-quick-create-url="{{ brand_quick_create_url }}">
+                            <option value=""></option>
+                            {% for value, label in form.vehicle_brand.field.choices %}
+                                {% if value %}
+                                <option value="{{ value }}" {% if form.vehicle_brand.value|stringformat:"s" == value|stringformat:"s" %}selected{% endif %}>
+                                    {{ label }}
+                                </option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        {% if form.vehicle_brand.errors %}
+                            <div class="text-danger small mt-1">{{ form.vehicle_brand.errors }}</div>
+                        {% endif %}
                     </div>
                     <div class="col-md-6 col-lg-3">
-                        <div class="odoo-field-label">VIN / Chassis</div>
-                        {{ form.vin }}
+                        <div class="odoo-field-label">Model *</div>
+                        <select name="{{ form.vehicle_model.html_name }}"
+                                id="id_vehicle_model"
+                                class="form-select model-autocomplete"
+                                data-placeholder="Search or create model..."
+                                data-search-url="{{ model_search_url }}"
+                                data-quick-create-url="{{ model_quick_create_url }}"
+                                data-brand-field="#id_vehicle_brand">
+                            <option value=""></option>
+                            {% for value, label in form.vehicle_model.field.choices %}
+                                {% if value %}
+                                <option value="{{ value }}" {% if form.vehicle_model.value|stringformat:"s" == value|stringformat:"s" %}selected{% endif %}>
+                                    {{ label }}
+                                </option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        {% if form.vehicle_model.errors %}
+                            <div class="text-danger small mt-1">{{ form.vehicle_model.errors }}</div>
+                        {% endif %}
                     </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="odoo-field-label">License Plate</div>
+                        {{ form.license_plate }}
+                        {% if form.license_plate.errors %}
+                            <div class="text-danger small mt-1">{{ form.license_plate.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="odoo-field-label">Chassis Number</div>
+                        {{ form.chassis_number }}
+                        {% if form.chassis_number.errors %}
+                            <div class="text-danger small mt-1">{{ form.chassis_number.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row g-3 mb-4">
                     <div class="col-md-6 col-lg-3">
                         <div class="odoo-field-label">JC date * <span class="text-muted fw-normal">(IST)</span></div>
                         {{ form.receipt_date }}
@@ -181,6 +269,8 @@
 
 {% block extra_js %}
 <script src="{% static 'contacts/js/customer_autocomplete.js' %}"></script>
+<script src="{% static 'fleet/js/brand_model_autocomplete.js' %}"></script>
+<script src="{% static 'workshop/js/jobcard_vehicle.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
 flatpickr('.datetime-picker', {
